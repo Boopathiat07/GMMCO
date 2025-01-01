@@ -4,6 +4,7 @@ import traceback
 import psycopg2
 from psycopg2 import sql
 
+
 def process_csv_file(file_path, db_connection):
     try:
         # Open the CSV file for reading
