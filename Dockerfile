@@ -1,25 +1,27 @@
 # Use official Python image as base
 FROM python:3.12-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
+RUN apt-get update && \
+    apt-get install -y \
     libpq-dev \
-    python3-dev \
     build-essential && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+
 WORKDIR /app
 
-# Copy application files
-COPY . /app
 
-# Install Python dependencies
+COPY requirements.txt .
+
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+COPY . .
+
+ENV FLASK_APP=main.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
 EXPOSE 5000
 
-# Command to run Flask app
-CMD ["python", "main.py"]
+CMD ["flask", "run"]
