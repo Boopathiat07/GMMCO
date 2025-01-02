@@ -11,17 +11,20 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-
+# Copy the requirements.txt file into the container
 COPY requirements.txt .
 
-
+# Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the application files into the container
 COPY . .
 
-ENV FLASK_APP=main.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
+# Expose port 5000 for the Flask application
 EXPOSE 5000
 
-CMD ["flask", "run"]
+# Set environment variables (they will be passed at runtime)
+# The environment variables will be passed at runtime, so no need to define them here
+
+# Run the application
+CMD ["python", "main.py"]
